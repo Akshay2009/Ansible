@@ -1,0 +1,35 @@
+---
+- name: DataBase Servers
+  hosts: dbservers
+  become: yes
+  tasks:
+    - name: install MariaDB server
+      ansible.builtin.apt:
+        name: mariadb-server
+        state: present
+   
+    - name: install PyMysql
+      ansible.builtin.apt:
+        name: python3-pymysql
+        state: present
+
+    - name: Starting MariaDB server
+      ansible.builtin.service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Creating Database with name 'Accounts'
+      community.mysql.mysql_db:
+        name: accounts
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Creating Database User with name 'vprofile'
+      community.mysql.mysql_user:
+        name: vprofile
+        password: 'admin123'
+        priv: '*.*:ALL'
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+

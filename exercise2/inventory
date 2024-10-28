@@ -1,0 +1,27 @@
+all:
+  hosts:
+    web01:   #any name we can give here
+      ansible_host: 172.31.21.171    #private ip web01 server
+      ansible_user: ubuntu  #check name on aws 
+      ansible_ssh_private_key_file: clientAnsible.pem   #key file in dir
+    web02:   #any name we can give here
+      ansible_host: 172.31.27.120    #private ip web01 server
+      ansible_user: ubuntu  #check name on aws
+      ansible_ssh_private_key_file: clientAnsible.pem   #key file in dir
+    db01:   #any name we can give here
+      ansible_host: 172.31.27.19    #private ip web01 server
+      ansible_user: ubuntu  #check name on aws
+      ansible_ssh_private_key_file: clientAnsible.pem   #key file in dir
+  children:
+    webservers:
+      hosts:
+        web01:
+        web02:
+    dbservers:
+      hosts:
+        db01:
+    dc_oregon:
+      children:
+        webservers:
+        dbservers:
+   

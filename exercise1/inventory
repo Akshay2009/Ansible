@@ -1,0 +1,6 @@
+all:
+  hosts:
+    web01:   #any name we can give here
+      ansible_host: 172.31.21.171    #private ip web01 server
+      ansible_user: ubuntu  #check name on aws 
+      ansible_ssh_private_key_file: clientAnsible.pem   #key file in dir
