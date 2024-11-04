@@ -1,0 +1,10 @@
+---
+- name:
+  hosts: all
+  tasks: 
+    - name: Printing Os Name
+      debug:
+        var: ansible_distribution
+    - name: Print Memory 
+      debug:
+        var: ansible_memory_mb.real.free
