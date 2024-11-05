@@ -1,0 +1,29 @@
+all:
+  hosts:
+    web01:
+      ansible_host: 172.31.21.171  # Private IP for web01 server
+    web02:
+      ansible_host: 172.31.27.120  # Private IP for web02 server
+    web03:
+      ansible_host: 172.31.19.1
+      ansible_user: ec2-user
+    db01:
+      ansible_host: 172.31.27.19   # Private IP for db01 server
+
+  children:
+    webservers:
+      hosts:
+        web01:
+        web02:
+        web03:
+    dbservers:
+      hosts:
+        db01:
+    dc_oregon:
+      children:
+        webservers:
+        dbservers:
+      vars:
+        ansible_user: ubuntu  # Check the username on AWS
+        ansible_ssh_private_key_file: clientAnsible.pem  # Key file in directory
+
